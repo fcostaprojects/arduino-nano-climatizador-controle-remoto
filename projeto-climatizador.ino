@@ -1,7 +1,17 @@
 //  Henry's Bench IR Remote Tutorial 2
 
+//https://github.com/z3t0/Arduino-IRremote
 #include <IRremote.h>
+
+//https://bitbucket.org/teckel12/arduino-new-tone/wiki/Home
 #include <NewTone.h>
+
+//https://github.com/jfturcot/SimpleTimer
+#include <SimpleTimer.h>
+
+// the timer object
+
+SimpleTimer timer;
 
 int IR_PIN = 2;
 
@@ -50,6 +60,12 @@ void setup()
 
   alarmConectadoTomada();
 
+  // a cada 5 secodos verifica o reservatorio de agua
+  timer.setInterval(5000, verificaNivelReservatorio);
+
+  // a cada 2 segundos verifica se o filtro esta encaixado no climatizador
+  timer.setInterval(2000, verificaFiltroArEncaixado);
+
 }
 
 void loop() {
@@ -58,9 +74,7 @@ void loop() {
     irDetect.resume(); 
   }
 
-  verificaNivelReservatorio();
-
-  verificaFiltroArEncaixado();
+  timer.run();
   
 }
 
@@ -185,7 +199,7 @@ void verificaNivelReservatorio () {
       alarmeReservatorioVazio();    
     }
   } else {
-    delay(100);
+    delay(150);
   }
 
 }
@@ -198,7 +212,7 @@ void verificaFiltroArEncaixado() {
     desligaTudo();
     alarmeFiltroArNaoEncaixado();
   } else {
-    delay(100);
+    delay(150);
   }
 
 }
@@ -239,7 +253,7 @@ void decodeIR() // Indicate what key is pressed
   case 0xFF629D:  
     {
       //Serial.println("Up Arrow"); 
-      ligaOzonizador();
+      iniciaVentilador();   
       delay(100);
     }
     break;
@@ -255,8 +269,7 @@ void decodeIR() // Indicate what key is pressed
   case 0xFF02FD:  
     {
       //Serial.println("OK"); 
-      iniciaVentilador();   
-      delay(100);
+      
     }
     break;
 
@@ -268,9 +281,13 @@ void decodeIR() // Indicate what key is pressed
     }
     break;
 
-//  case 0xFFA857:  
-//    Serial.println("Down Arrow"); 
-//    break;
+  case 0xFFA857:  
+    {	
+      Serial.println("Down Arrow"); 
+      ligaOzonizador();
+      delay(100); 
+    }
+    break;
 
   case 0xFF6897:  
     {
