@@ -60,7 +60,7 @@ void setup()
 
   alarmConectadoTomada();
 
-  // a cada 5 secodos verifica o reservatorio de agua
+  // a cada 5 segundos verifica o reservatorio de agua
   timer.setInterval(5000, verificaNivelReservatorio);
 
   // a cada 2 segundos verifica se o filtro esta encaixado no climatizador
