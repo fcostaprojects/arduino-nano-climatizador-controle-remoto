@@ -60,7 +60,7 @@ void setup()
 
   alarmConectadoTomada();
 
-  // a cada 5 segundos verifica o reservatorio de agua
+  // a cada 5 secodos verifica o reservatorio de agua
   timer.setInterval(5000, verificaNivelReservatorio);
 
   // a cada 2 segundos verifica se o filtro esta encaixado no climatizador
@@ -117,6 +117,7 @@ void ligaBombaAguaCirculacao() {
       } else {
         digitalWrite(pinD7BombaAguaCirculacao,LOW);
         bombaAguaLigado = true;
+        delay(50);
       }
 
     } else {
@@ -136,6 +137,7 @@ void ligaOsciladorVentilador() {
     if (osciladorVentiladorLigado == false) {
       digitalWrite(pinD6OsciladorVentilador,LOW);
       osciladorVentiladorLigado = true;
+      delay(50);
     } else {
       digitalWrite(pinD6OsciladorVentilador,HIGH);
       osciladorVentiladorLigado = false;
@@ -149,6 +151,7 @@ void ligaOzonizador() {
     if (ozonizadorLigado == false) {
       digitalWrite(pinD5Ozonizador,LOW);
       ozonizadorLigado = true;
+      delay(50);
     } else {
       digitalWrite(pinD5Ozonizador,HIGH);
       ozonizadorLigado = false;
@@ -198,8 +201,6 @@ void verificaNivelReservatorio () {
       desligaBombaAguaCirculacao();
       alarmeReservatorioVazio();    
     }
-  } else {
-    delay(150);
   }
 
 }
@@ -211,9 +212,7 @@ void verificaFiltroArEncaixado() {
   if (state) {
     desligaTudo();
     alarmeFiltroArNaoEncaixado();
-  } else {
-    delay(150);
-  }
+  } 
 
 }
 
@@ -246,6 +245,8 @@ void decodeIR() // Indicate what key is pressed
 
 {
 
+  delay(50);
+
   switch(irIn.value)
 
   {
@@ -253,8 +254,7 @@ void decodeIR() // Indicate what key is pressed
   case 0xFF629D:  
     {
       //Serial.println("Up Arrow"); 
-      iniciaVentilador();   
-      delay(100);
+      iniciaVentilador();         
     }
     break;
 
@@ -262,7 +262,6 @@ void decodeIR() // Indicate what key is pressed
     {
       //Serial.println("Left Arrow"); 
       ligaBombaAguaCirculacao();
-      delay(100);
     }
     break;
 
@@ -277,15 +276,13 @@ void decodeIR() // Indicate what key is pressed
     {
       //Serial.println("Right Arrow"); 
       ligaOsciladorVentilador();
-      delay(100);
     }
     break;
 
   case 0xFFA857:  
     {	
-      Serial.println("Down Arrow"); 
+      //Serial.println("Down Arrow"); 
       ligaOzonizador();
-      delay(100); 
     }
     break;
 
@@ -293,7 +290,6 @@ void decodeIR() // Indicate what key is pressed
     {
       //Serial.println("1"); 
       ligaVentiladorPrincipalVelocidade_1();
-      delay(100);
     }
     break;
 
@@ -301,7 +297,6 @@ void decodeIR() // Indicate what key is pressed
     {
       //Serial.println("2"); 
       ligaVentiladorPrincipalVelocidade_2();
-      delay(100);
     }
     break;
 
@@ -309,7 +304,6 @@ void decodeIR() // Indicate what key is pressed
     {
       //Serial.println("3"); 
       ligaVentiladorPrincipalVelocidade_3();
-      delay(100);
     }
     break;
 
