@@ -38,7 +38,7 @@ boolean ozonizadorLigado = false;
 
 void setup()
 {
-  Serial.begin(9600);
+  //Serial.begin(9600);
   
   irDetect.enableIRIn(); // Start the Receiver
 
@@ -63,8 +63,8 @@ void setup()
   // a cada 5 secodos verifica o reservatorio de agua
   timer.setInterval(5000, verificaNivelReservatorio);
 
-  // a cada 2 segundos verifica se o filtro esta encaixado no climatizador
-  timer.setInterval(2000, verificaFiltroArEncaixado);
+  // a cada 3 segundos verifica se o filtro esta encaixado no climatizador
+  timer.setInterval(3000, verificaFiltroArEncaixado);
 
 }
 
